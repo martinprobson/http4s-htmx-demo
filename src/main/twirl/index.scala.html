@@ -1,0 +1,32 @@
+@(timestamp: String)
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/bootstrap/5.3.2/dist/css/bootstrap.min.css">
+    <link rel="icon" type="image/svg+xml" href="/http4s-favicon.svg">
+    <script src="/htmx.org/1.9.10/dist/htmx.min.js"></script>
+    <title>http4s htmx demo</title>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">htmx Scala Http4s</a>
+                <p class="navbar-text">Rendered at @timestamp</p>
+
+            </div>
+        </nav>
+<div class="container alert alert-secondary" role="alert">
+    <p>A very simple "todo" UI using <a href="https://htmx.org">htmx</a>
+        with a Scala <a href="https://http4s.org">http4s</a> backend and 
+        <a href="https://github.com/playframework/twirl">twirl</a> templates
+    </p>
+</div>
+            <div class="container" id="todo-table">
+            </div>
+<div hx-get="/todos" hx-trigger="load" hx-target="#todo-table"> </div>
+<script src="/popper.js/1.16.1/dist/popper.min.js"></script>
+<script src="/bootstrap/5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

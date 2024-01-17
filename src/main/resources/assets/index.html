@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/bootstrap/5.3.2/dist/css/bootstrap.min.css"> 
+    <link rel="icon" type="image/svg+xml" href="/http4s-favicon.svg">
+    <script src="/htmx.org/1.9.10/dist/htmx.min.js"></script>
+    <title>http4s htmx demo</title>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">htmx Scala Http4s</a>
+            </div>
+        </nav>
+        <div class="container alert alert-secondary" role="alert">
+            <p>A very simple "todo" UI done with htmx</p>
+        </div>
+            <div class="container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"> To Do </th>
+                            <th scope="col"> Done </th>
+                            <th scope="col" class="w-25"> &nbsp; </th>
+                    </thead>
+                    <tbody id="todo-list">
+                            <tr>
+                                <td th:text="${item}">Get Groceries</td>
+                                <td> <input type="checkbox"/> </td>
+                                <td>
+                                    <button class="btn btn-danger" hx-confirm="Are you sure?" hx-target="closest tr" hx-swap="outerHTML swap:1s" hx-trigger="click" hx-delete="/todo/delete">Delete
+</button>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+                <table class="table">
+                    <tr>
+                        <td colspan="2">
+                            <input autofocus="autofocus" class="form-control form-control-plaintext" id="new-todo" name="new-todo" placeholder="To do..." required type="text">
+                        </td>
+                        <td class="w-25">
+                            <button _="on htmx:afterRequest put '' into #new-todo.value" id="mon" hx-include="#new-todo" hx-post="/todo/create" hx-target="#todo-list" hx-swap="beforeend" hx-trigger="click" class="btn btn-primary">Add
+</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+<div class="app">
+</div>
+<div hx-get="/hello" hx-trigger="load"> </div>
+<script src="/popper.js/1.16.1/dist/popper.min.js"></script>
+<script src="/bootstrap/5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+@import net.martinprobson.demo.ToDo
+@(todos: List[ToDo])
+<table class="table table-hover">
+  <thead>
+    <tr>
+       <th scope="col"> To Do </th>
+       <th scope="col"> Done </th>
+       <th scope="col" class="w-25"> &nbsp; </th>
+  </thead>
+       <tbody id="todo-list">
+          @for(t <- todos) {
+            <tr>
+               <td>@t.description</td>
+               <td>
+                  <input type=checkbox hx-trigger="click" hx-patch="/todo/@t.id" 
+                  @if(t.complete == true) {
+                     checked/>
+                  } else {
+                     />
+                  }
+               </td>
+               <td>
+                  <button   class="btn btn-danger" 
+                            hx-confirm="Are you sure?" 
+                            hx-target="#todo-table" 
+                            hx-trigger="click" 
+                            hx-delete="/todo/@t.id">Delete
+                  </button>
+               </td>
+            </tr>
+          }
+       </tbody>
+</table>
+<table class="table">
+                    <tr>
+                        <td colspan="2">
+                            <input autofocus="autofocus" 
+                                   class="form-control form-control-plaintext" 
+                                   id="new-todo" 
+                                   name="new-todo" 
+                                   placeholder="To do..." 
+                                   required type="text">
+                        </td>
+                        <td class="w-25">
+                            <button _="on htmx:afterRequest put '' into #new-todo.value" 
+                                    id="mon" 
+                                    hx-include="#new-todo" 
+                                    hx-post="/todo/create" 
+                                    hx-target="#todo-table" 
+                                    hx-trigger="click" 
+                                    class="btn btn-primary">Add
+</button>
+                        </td>
+                    </tr>
+</table>

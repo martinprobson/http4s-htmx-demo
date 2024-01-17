@@ -1,0 +1,62 @@
+# use glob syntax.
+syntax: glob
+*.ser
+*.class
+*.log
+*~
+*.bak
+#*.off
+*.old
+*.out
+.cache*
+.worksheet
+logs/*
+.bloop/*
+.bloop/
+.bsp/*
+.metals/*
+.vscode/*
+
+# eclipse conf file
+.settings
+.classpath
+.project
+.manager
+.scala_dependencies
+
+# idea
+.idea
+*.iml
+
+# building
+target
+build
+null
+tmp*
+temp*
+dist
+test-output
+build.log
+
+# other scm
+.svn
+.CVS
+.hg*
+
+# switch to regexp syntax.
+#  syntax: regexp
+#  ^\.pc/
+
+
+# spark
+metastore_db/
+
+# Maven shade
+dependency-reduced-pom.xml
+/project/project/project/metals.sbt
+/project/project/metals.sbt
+/project/metals.sbt
+/project/.bloop/spark-scala-sbt-example-build.json
+/project/project/.bloop/spark-scala-sbt-example-build-build.json
+/project/.bloop/bloop.settings.json
+/project/project/.bloop/bloop.settings.json
