@@ -18,7 +18,7 @@ point your browser to `http://localhost:8080` and you should see the following p
 
 ## Logging
 
-Change the logback.xml file to see debug messages to the console.
+Change the [logback.xml](src/main/resources/logback.xml) file to see/hide debug messages.
 
 ## Database
 To 
