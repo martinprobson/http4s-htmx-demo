@@ -13,30 +13,29 @@ import net.martinprobson.demo.ToDo.ID
 
 class DoobieToDoRepository(xa: Transactor[IO]) extends ToDoRepository with Logging {
 
-  override def toggle(id: ID): IO[Unit] = ???
+  override def toggle(id: ID): IO[Int] = for {
+    r <- sql"UPDATE todo SET complete = NOT complete WHERE id = $id".update.run.transact(xa)
+    _ <- log.debug(s"Toggled todo with id = $id response = $r")
+  } yield r
 
   override def delete(id: ID): IO[Int] = for {
-    r <- deleteToDo(id)
+    r <- sql"DELETE FROM todo WHERE id = $id".update.run.transact(xa)
     _ <- log.debug(s"Deleted todo with id = $id response = $r")
   } yield r
 
   override def add(todo: ToDo): IO[ToDo] = for {
     _ <- log.info(s"About to create : $todo")
     todo <- insertToDo(todo)
-    _ <- log.info(s"Created user: $todo")
+    _ <- log.info(s"Created todo: $todo")
   } yield todo
 
   override def get(): IO[List[ToDo]] = selectAll.compile.toList
 
   override def count(): IO[Long] = selectCount.transact(xa)
 
-  private def deleteToDo(id: ID): IO[Int] =
-    sql"DELETE FROM todo WHERE id = $id".update.run.transact(xa)
-
   private def insertToDo(todo: ToDo): IO[ToDo] = (for {
     _ <-
-      sql"INSERT INTO todo (description, complete) VALUES (${todo.description},${todo.complete})"
-        .update.run
+      sql"INSERT INTO todo (description, complete) VALUES (${todo.description},${todo.complete})".update.run
     id <- sql"SELECT last_insert_id()".query[Long].unique
     todo <- Free.pure[ConnectionOp, ToDo](ToDo(id, todo.description, todo.complete))
   } yield todo).transact(xa)

@@ -11,10 +11,10 @@ class InMemoryToDoRepository(db: Ref[IO, SortedMap[ID, ToDo]], counter: Ref[IO, 
     extends ToDoRepository
     with Logging {
 
-  override def toggle(id: ID): IO[Unit] = for {
+  override def toggle(id: ID): IO[Int] = for {
     _ <- log.debug(s"About to toggle todo: $id")
     _ <- db.update(todos => todos + (id -> ToDo(id, todos(id).description, !todos(id).complete)))
-  } yield ()
+  } yield 1
 
   override def delete(id: ID): IO[Int] = for {
     _ <- log.debug(s"About to delete todo: $id")
