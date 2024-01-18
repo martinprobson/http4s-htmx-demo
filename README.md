@@ -7,9 +7,9 @@ This application implements the classic 'To Do' application with a database (JDB
 
 ## Using this Project
 
-Requirements: [JDK](https://adoptopenjdk.net/?variant=openjdk17) >= 17 or and [Sbt](https://maven.apache.org/).
+Requirements: [JDK](https://adoptopenjdk.net/?variant=openjdk17) >= 17 and [Sbt](https://maven.apache.org/).
 
-Once Java & sbt are installed, you can clone this project, run `sbt run`.
+Once Java & sbt are installed, clone this project, and run `sbt run` from the project root.
 
 You should see this line in the console: -
 ```
