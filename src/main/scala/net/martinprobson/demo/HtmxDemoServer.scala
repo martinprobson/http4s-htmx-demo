@@ -23,16 +23,13 @@ object HtmxDemoServer extends IOApp.Simple with Logging {
 
   /** This is our main entry point where the code will actually get executed.
     *
-    * We provide a transactor which will be used by Doobie to execute the SQL statements. Config is
-    * lifted into a Resource so that it can be used to setup the connection pool.
+    * We provide a transactor (as a Resource) which will be used by Doobie to execute the SQL statements. 
     */
   override def run: IO[Unit] = DBTransactor.transactor.use { xa =>
     program(xa).flatMap(_ => log.info("Program exit"))
   }
 
-  /** Start an Ember server to run our Http App.<p> We provide a transactor which will be used by
-    * Doobie to execute the SQL statements. Config is lifted into a Resource so that it can be used
-    * to setup the connection pool.</p>
+  /** Start an Ember server to run our Http App. 
     */
   private def program(xa: Transactor[IO]): IO[Unit] = for {
     _ <- log.info("Program starting....")
@@ -79,6 +76,9 @@ object HtmxDemoServer extends IOApp.Simple with Logging {
     todos <- toDoRepository.get()
   } yield todos
 
+  /**
+   * All our http routes are defined here
+   */
   private def toDoService(toDoRepository: ToDoRepository): HttpRoutes[IO] = HttpRoutes
     .of[IO] {
       case PATCH -> Root / "todo" / IntVar(id) =>
